@@ -1,7 +1,6 @@
 name: build
 
 on: push
- 
 
 jobs:
   build:
@@ -13,7 +12,7 @@ jobs:
         run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/
-          sudo apt-get install git cmake
+          sudo apt-get install git cmake libllvm9 llvm-9-dev libclang-9-dev clang-9
           git clone https://github.com/polycube-network/polycube   
           cd polycube
           git submodule update --init --recursive
