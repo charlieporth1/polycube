@@ -8,16 +8,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup package env
+        run: |
+          mkdir -p .debpkg/etc/systemd/{system,user}
+          mkdir -p .debpkg/usr/{s,}bin/
+          mkdir -p .debpkg/usr/lib/
       - name: Remove Problem Libs script
         run: sudo apt list --installed | grep "llvm" | awk -F/ '{print $1}'  | grep -v 9 | xargs sudo apt remove -y
-      - name: Create Polycube script
+      - name: Install tools & deps script
         run: |
-          mkdir -p .debpkg/usr/bin
-          mkdir -p .debpkg/usr/lib/
-          sudo apt install -y git cmake libllvm9 llvm-9-dev libclang-9-dev clang-9
+          sudo apt install -y git 
+      - name: Clone Polycube from git script
+        run: |
           git clone https://github.com/polycube-network/polycube   
           cd polycube
           git submodule update --init --recursive
+      - name: Install Polycube deps script
+        run: |
+          sudo apt install -y cmake libllvm9 llvm-9-dev libclang-9-dev clang-9
+	 ./scripts/pre-requirements.sh 
+      - name: Create Polycube script
+        run: |
           ./scripts/install.sh default .debpkg/usr/bin
       - uses: jiro4989/build-deb-action@v2
         with:
