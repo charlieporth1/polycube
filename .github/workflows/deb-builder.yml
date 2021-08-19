@@ -17,7 +17,7 @@ jobs:
         run: sudo apt list --installed | grep "llvm" | awk -F/ '{print $1}'  | grep -v 9 | xargs sudo apt remove -y
       - name: Install tools & deps script
         run: |
-          sudo apt install -y git 
+          sudo apt install -y git iptables
       - name: Clone Polycube from git script
         run: |
           git clone https://github.com/polycube-network/polycube   
@@ -25,7 +25,7 @@ jobs:
           git submodule update --init --recursive
       - name: Install Polycube deps script
         run: |
-          sudo apt install -y cmake libllvm9 llvm-9-dev libclang-9-dev clang-9 libyang-dev
+          sudo apt install -y cmake libllvm9 llvm-9-dev libclang-9-dev clang-9 libyang-dev libevent-pthreads-2.1-7
           ./scripts/pre-requirements.sh 
       - name: Create Polycube script
         run: |
