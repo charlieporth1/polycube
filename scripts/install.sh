@@ -52,16 +52,12 @@ while getopts h option; do
  h|\?)
   show_help
   exit 0
-  ;;
- --prefix=*)
-   INSTALL_PREFIX="DESTDIR=${option#*=}"
-  ;;
  esac
 done
-
 echo "Use 'install.sh -h' to show advanced installation options."
 
 MODE=$1
+INSTALL_PREFIX=$( [[ -n "$2" ]] && echo "DESTDIR=$2" || echo "")
 
 [ -z ${SUDO+x} ] && SUDO='sudo'
 [ -z ${WORKDIR+x} ] && WORKDIR=$HOME/dev
