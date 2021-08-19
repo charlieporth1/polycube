@@ -12,6 +12,7 @@ jobs:
         run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/
+	  sudo apt list --installed | grep "llvm" | awk -F/ '{print $1}'  | grep -v 9 | xargs sudo apt remove -y
           sudo apt install -y git cmake libllvm9 llvm-9-dev libclang-9-dev clang-9
           git clone https://github.com/polycube-network/polycube   
           cd polycube
