@@ -8,8 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create Polycube script
+      - name: Remove Problem Libs script
         run: sudo apt list --installed | grep "llvm" | awk -F/ '{print $1}'  | grep -v 9 | xargs sudo apt remove -y
+      - name: Create Polycube script
         run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/
