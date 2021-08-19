@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Polycube script
+        run: |
+          mkdir -p .debpkg/usr/bin
+          mkdir -p .debpkg/usr/lib/
+          sudo apt-get install git cmake
+          git clone https://github.com/polycube-network/polycube   
+          cd polycube
+          git submodule update --init --recursive
+          ./scripts/install.sh default .debpkg/usr/bin
+      - uses: jiro4989/build-deb-action@v2
+        with:
+          package: Polycube
+          package_root: .debpkg
+          maintainer: Polycube
+          version: ${{ github.ref }} # refs/tags/v*.*.*
+          arch: 'amd64'
+          depends: 'libc6 (>= 2.2.1), git'
+          desc: 'Release'
