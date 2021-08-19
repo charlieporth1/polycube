@@ -52,6 +52,10 @@ while getopts h option; do
  h|\?)
   show_help
   exit 0
+  ;;
+ --prefix=*)
+   INSTALL_PREFIX="DESTDIR=${option#*=}"
+  ;;
  esac
 done
 
@@ -148,6 +152,6 @@ else
   cmake .. -DENABLE_PCN_IPTABLES=ON
 fi
 make -j $(getconf _NPROCESSORS_ONLN)
-$SUDO make install
+$SUDO make $INSTALL_PREFIX install
 
 success_message
