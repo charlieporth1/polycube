@@ -26,7 +26,7 @@ jobs:
       - name: Install Polycube deps script
         run: |
           sudo apt install -y cmake libllvm9 llvm-9-dev libclang-9-dev clang-9
-	 ./scripts/pre-requirements.sh 
+	  ./scripts/pre-requirements.sh 
       - name: Create Polycube script
         run: |
           ./scripts/install.sh default .debpkg/usr/bin
